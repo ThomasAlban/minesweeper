@@ -1,0 +1,26 @@
+[package]
+name = "minesweeper"
+version = "0.1.0"
+edition = "2021"
+description = "A simple Minesweeper game coded in Rust using the Piston game engine."
+
+[dependencies]
+find_folder = "0.3.0"
+gfx_device_gl = "0.16.2"
+piston2d-gfx_graphics = "0.79.0"
+piston_window = "0.128.0"
+rand = "0.8.5"
+stopwatch = "0.0.7"
+
+[profile.release]
+opt-level = 'z'     # Optimize for size
+lto = true          # Enable link-time optimization
+codegen-units = 1   # Reduce number of codegen units to increase optimizations
+panic = 'abort'     # Abort on panic
+strip = true        # Strip symbols from binary*
+
+[package.metadata.bundle]
+name = "Minesweeper"
+identifier = "com.thomasalban.minesweeper"
+icon = ["assets/icon.icns"]
+resources = ["assets"]
