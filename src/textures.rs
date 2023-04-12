@@ -20,7 +20,7 @@ impl GameTextures {
         // find the assets folder starting from the executable's folder
         let assets = find_folder::Search::ParentsThenKids(3, 3)
             .of(exe_folder)
-            .for_folder("assets")
+            .for_folder("Resources")
             .unwrap();
         // return the struct containing all the textures
         GameTextures {
@@ -39,7 +39,7 @@ trait MinesweeperTexture {
     fn load_texture(window: &mut PistonWindow, assets: &PathBuf, path: &str) -> G2dTexture {
         Texture::from_path(
             &mut window.create_texture_context(),
-            assets.join(path),
+            assets.join(format!("assets/{}", path)),
             Flip::None,
             &TextureSettings::new(),
         )
