@@ -41,11 +41,10 @@ pub fn tile_sprites<'a>(
                     // show all flags that aren't mines as wrong
                     texture = &textures.tile.mine_wrong;
                 }
-            } else if game.state == GameState::Won {
-                if game.get_tile(coord).mines == TileMines::Mine {
-                    // if we have won, show all mines as flagged
-                    texture = &textures.tile.flagged;
-                }
+            } else if game.state == GameState::Won && game.get_tile(coord).mines == TileMines::Mine
+            {
+                // if we have won, show all mines as flagged
+                texture = &textures.tile.flagged;
             }
             sprites.push((image, texture));
         }
@@ -57,95 +56,94 @@ pub fn border_sprites<'a>(
     window_size: &Size,
     textures: &'a GameTextures,
 ) -> impl Iterator<Item = (Image, &'a Texture<gfx_device_gl::Resources>)> {
-    let mut sprites = Vec::new();
-
-    // top
-    sprites.push((
-        Image::new().rect([0., 0., window_size.width, BORDER_SIZE]),
-        &textures.border.horizontal,
-    ));
-    // bottom
-    sprites.push((
-        Image::new().rect([
-            0.,
-            window_size.height - BORDER_SIZE * BORDER_WIDE_SCALE_FACTOR,
-            window_size.width,
-            BORDER_SIZE * BORDER_WIDE_SCALE_FACTOR,
-        ]),
-        &textures.border.horizontal_wide,
-    ));
-    // left
-    sprites.push((
-        Image::new().rect([0., 0., BORDER_SIZE, window_size.height]),
-        &textures.border.vertical,
-    ));
-    // right
-    sprites.push((
-        Image::new().rect([
-            window_size.width - BORDER_SIZE,
-            0.,
-            BORDER_SIZE,
-            window_size.height,
-        ]),
-        &textures.border.vertical,
-    ));
-    // middle
-    sprites.push((
-        Image::new().rect([0., BORDER_MIDDLE_POS, window_size.width, BORDER_SIZE]),
-        &textures.border.horizontal,
-    ));
-    // top left
-    sprites.push((
-        Image::new().rect([0., 0., BORDER_SIZE, BORDER_SIZE]),
-        &textures.border.top_left,
-    ));
-    // top right
-    sprites.push((
-        Image::new().rect([
-            window_size.width - BORDER_SIZE,
-            0.,
-            BORDER_SIZE,
-            BORDER_SIZE,
-        ]),
-        &textures.border.top_right,
-    ));
-    // bottom left
-    sprites.push((
-        Image::new().rect([
-            0.,
-            window_size.height - BORDER_SIZE * BORDER_WIDE_SCALE_FACTOR,
-            BORDER_SIZE,
-            BORDER_SIZE * BORDER_WIDE_SCALE_FACTOR,
-        ]),
-        &textures.border.bottom_left_wide,
-    ));
-    // bottom right
-    sprites.push((
-        Image::new().rect([
-            window_size.width - BORDER_SIZE,
-            window_size.height - BORDER_SIZE * BORDER_WIDE_SCALE_FACTOR,
-            BORDER_SIZE,
-            BORDER_SIZE * BORDER_WIDE_SCALE_FACTOR,
-        ]),
-        &textures.border.bottom_right_wide,
-    ));
-    // middle left
-    sprites.push((
-        Image::new().rect([0., BORDER_MIDDLE_POS, BORDER_SIZE, BORDER_SIZE]),
-        &textures.border.middle_left,
-    ));
-    // middle right
-    sprites.push((
-        Image::new().rect([
-            window_size.width - BORDER_SIZE,
-            BORDER_MIDDLE_POS,
-            BORDER_SIZE,
-            BORDER_SIZE,
-        ]),
-        &textures.border.middle_right,
-    ));
-
-    sprites.into_iter()
+    vec![
+        // top
+        (
+            Image::new().rect([0., 0., window_size.width, BORDER_SIZE]),
+            &textures.border.horizontal,
+        ),
+        // bottom
+        (
+            Image::new().rect([
+                0.,
+                window_size.height - BORDER_SIZE * BORDER_WIDE_SCALE_FACTOR,
+                window_size.width,
+                BORDER_SIZE * BORDER_WIDE_SCALE_FACTOR,
+            ]),
+            &textures.border.horizontal_wide,
+        ),
+        // left
+        (
+            Image::new().rect([0., 0., BORDER_SIZE, window_size.height]),
+            &textures.border.vertical,
+        ),
+        // right
+        (
+            Image::new().rect([
+                window_size.width - BORDER_SIZE,
+                0.,
+                BORDER_SIZE,
+                window_size.height,
+            ]),
+            &textures.border.vertical,
+        ),
+        // middle
+        (
+            Image::new().rect([0., BORDER_MIDDLE_POS, window_size.width, BORDER_SIZE]),
+            &textures.border.horizontal,
+        ),
+        // top left
+        (
+            Image::new().rect([0., 0., BORDER_SIZE, BORDER_SIZE]),
+            &textures.border.top_left,
+        ),
+        // top right
+        (
+            Image::new().rect([
+                window_size.width - BORDER_SIZE,
+                0.,
+                BORDER_SIZE,
+                BORDER_SIZE,
+            ]),
+            &textures.border.top_right,
+        ),
+        // bottom left
+        (
+            Image::new().rect([
+                0.,
+                window_size.height - BORDER_SIZE * BORDER_WIDE_SCALE_FACTOR,
+                BORDER_SIZE,
+                BORDER_SIZE * BORDER_WIDE_SCALE_FACTOR,
+            ]),
+            &textures.border.bottom_left_wide,
+        ),
+        // bottom right
+        (
+            Image::new().rect([
+                window_size.width - BORDER_SIZE,
+                window_size.height - BORDER_SIZE * BORDER_WIDE_SCALE_FACTOR,
+                BORDER_SIZE,
+                BORDER_SIZE * BORDER_WIDE_SCALE_FACTOR,
+            ]),
+            &textures.border.bottom_right_wide,
+        ),
+        // middle left
+        (
+            Image::new().rect([0., BORDER_MIDDLE_POS, BORDER_SIZE, BORDER_SIZE]),
+            &textures.border.middle_left,
+        ),
+        // middle right
+        (
+            Image::new().rect([
+                window_size.width - BORDER_SIZE,
+                BORDER_MIDDLE_POS,
+                BORDER_SIZE,
+                BORDER_SIZE,
+            ]),
+            &textures.border.middle_right,
+        ),
+    ]
+    .into_iter()
 }
 
 pub fn face_button_sprite<'a>(
@@ -187,11 +185,11 @@ pub fn difficulty_buttons_sprites<'a>(
     sprites.into_iter()
 }
 
-fn num_display_sprites<'a>(
-    textures: &'a GameTextures,
+fn num_display_sprites(
+    textures: &GameTextures,
     num_display_rect: [f64; 4],
     num: i32,
-) -> impl Iterator<Item = (Image, &'a Texture<gfx_device_gl::Resources>)> {
+) -> impl Iterator<Item = (Image, &Texture<gfx_device_gl::Resources>)> {
     let mut sprites = Vec::new();
     let num = if num < 0 { 0 } else { num };
     // the background

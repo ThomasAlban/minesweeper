@@ -182,7 +182,6 @@ impl Minesweeper {
                 self.get_tile_mut(coord).state = TileState::Open;
                 if self.get_tile(coord).mines == TileMines::Mine {
                     self.state = GameState::Lost;
-                    return;
                 } else if self.get_tile(coord).mines == TileMines::NoMine(0) {
                     // if the tile has no mines around it, open all the tiles around it recursively
                     for neighbour in self.iter_neighbours(coord) {
@@ -191,11 +190,9 @@ impl Minesweeper {
                         }
                     }
                 }
-                return;
             }
             TileState::Flagged => {
                 self.get_tile_mut(coord).state = TileState::Closed;
-                return;
             }
             TileState::Open => {
                 if let TileMines::NoMine(n) = self.get_tile(coord).mines {

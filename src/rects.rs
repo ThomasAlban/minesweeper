@@ -13,8 +13,8 @@ pub fn mouse_intersects_rect(mouse_pos: [f64; 2], rect: [f64; 4]) -> bool {
 
 pub fn get_window_size(game: &Minesweeper) -> [f64; 2] {
     [
-        game.dimensions.x as f64 * TILE_SIZE as f64 + BORDER_SIZE * 2.,
-        game.dimensions.y as f64 * TILE_SIZE as f64
+        game.dimensions.x as f64 * TILE_SIZE + BORDER_SIZE * 2.,
+        game.dimensions.y as f64 * TILE_SIZE
             + BORDER_MIDDLE_POS
             + BORDER_SIZE
             + BORDER_SIZE * BORDER_WIDE_SCALE_FACTOR,
